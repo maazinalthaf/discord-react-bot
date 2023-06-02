@@ -10,4 +10,4 @@ This bot adds reactions to specific words in a message sent in a channel.
 - open terminal and run the following commands
 `npm install`
 `node index.js`
--to remove triggers edit reactions.json
+- to remove triggers edit reactions.json
