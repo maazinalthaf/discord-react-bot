@@ -1,7 +1,7 @@
 const fs = require('fs').promises;
 const { Client, Intents } = require('discord.js');
 
-const TOKEN = 'MTExMzk0OTAyMzU2NTUyOTExOA.GPfrUT.dk67JJd_pu0sh2QzgvK5_paxO5kk7UtPvm8iqY'; // Replace with your bot token
+const TOKEN = 'INSERT BOT TOKEN'; // Replace with your bot token
 const PREFIX = '?'; // Prefix for commands
 const REACTIONS_FILE = 'reactions.json'; // File to store reactions
 
@@ -52,7 +52,7 @@ client.on('messageCreate', async (message) => {
 
   if (command === 'addreaction') {
     // Check if the user has the specified role(s)
-    const allowedRoles = ['Anarchy', 'Developer']; // Replace with your allowed role names or IDs
+    const allowedRoles = ['Role1', 'Role2']; // Replace with your allowed role names or IDs
     const memberRoles = message.member.roles.cache;
 
     const hasAllowedRole = allowedRoles.some((role) =>
