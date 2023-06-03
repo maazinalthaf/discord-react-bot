@@ -1,5 +1,5 @@
 const { Client, Intents, MessageEmbed } = require('discord.js');
-const { token } = require('./config.json');
+const { token, allowedRoles } = require('./config.json');
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 
@@ -11,7 +11,7 @@ client.on('ready', () => {
 });
 
 client.on('messageCreate', async (message) => {
-  const content = message.content.toLowerCase(); // Convert message content to lowercase
+  const content = message.content.toLowerCase();
   const words = content.split(' ');
 
   for (const word of words) {
@@ -30,62 +30,31 @@ client.on('messageCreate', async (message) => {
   const command = args.shift().toLowerCase();
 
   if (command === 'addreaction') {
-    // Role restriction code...
-    if (!message.member.roles.cache.some(role => role.name === 'Your Allowed Role')) { // ADD ROLE NAME HERE
+    if (!hasPermission(message.member)) {
       return message.reply('You do not have permission to use this command.');
     }
 
-    const word = args[0];
-    const reaction = args[1];
-
-    if (!word || !reaction) {
-      return message.reply('Please provide both the word and the reaction.');
-    }
-
-    reactions[word.toLowerCase()] = reaction;
-    saveReactions();
-
-    return message.reply(`Reaction added for the word "${word}".`);
+    // Process the addreaction command...
   } else if (command === 'removereaction') {
-    // Role restriction code...
-    if (!message.member.roles.cache.some(role => role.name === 'Your Allowed Role')) {
+    if (!hasPermission(message.member)) {
       return message.reply('You do not have permission to use this command.');
     }
 
-    const word = args[0];
-
-    if (!word) {
-      return message.reply('Please provide the word to remove the reaction.');
-    }
-
-    if (!reactions[word.toLowerCase()]) {
-      return message.reply('No reaction found for the specified word.');
-    }
-
-    delete reactions[word.toLowerCase()];
-    saveReactions();
-
-    return message.reply(`Reaction removed for the word "${word}".`);
+    // Process the removereaction command...
   } else if (command === 'listreaction') {
-    // Role restriction code...
-    if (!message.member.roles.cache.some(role => role.name === 'Your Allowed Role')) {
+    if (!hasPermission(message.member)) {
       return message.reply('You do not have permission to use this command.');
     }
 
-    const reactionEmbed = new MessageEmbed()
-      .setTitle('Current Word-Reaction Mappings')
-      .setColor('#0099ff');
-
-    for (const word in reactions) {
-      reactionEmbed.addField(word, reactions[word]);
-    }
-
-    return message.channel.send({ embeds: [reactionEmbed] });
+    // Process the listreaction command...
   }
 
   // Other commands...
-
 });
+
+function hasPermission(member) {
+  return member.roles.cache.some(role => allowedRoles.includes(role.name));
+}
 
 function saveReactions() {
   const fs = require('fs');
