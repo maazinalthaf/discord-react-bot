@@ -1,0 +1,4 @@
+{
+  "token": "YOUR_BOT_TOKEN_HERE",
+  "allowedRoles": ["ROLE_NAME_1", "ROLE_NAME_2"]
+}
