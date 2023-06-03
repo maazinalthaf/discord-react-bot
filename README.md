@@ -10,11 +10,9 @@ This bot adds reactions to specific words in a message sent in a channel.
 `node index.js`
 
 ### Usage:-
-To add a new word trigger use the following command
-- `?addreaction (word) (emoji)``
-<br/>
-To remove a word trigger use the following command
-- `?removereaction (word)
-<br/>
-To list all word triggers use the following command
-- `?listreaction`
+- To add a new word trigger use the following command
+`?addreaction (word) (emoji)``
+- To remove a word trigger use the following command
+`?removereaction (word)`
+- To list all word triggers use the following command
+`?listreaction`
