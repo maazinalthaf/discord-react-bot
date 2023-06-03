@@ -1,13 +1,21 @@
 # discord-react-bot
 This bot adds reactions to specific words in a message sent in a channel.
 
-### Usage:-
-`?addreaction word reaction`
 ### Installation:-
 - clone the repository
-- insert the token and prefix in **index.js** (default:"?")
-- replace Role1 and the Role2 with desired role names or id (add , for more roles)
+- insert the token and names of the allowed roles (role ids will not work) in **config.json**
+- prefix can be changed from **index.js** (default:"?")
 - open terminal and run the following commands
 `npm install`
 `node index.js`
-- to remove triggers edit reactions.json
+
+### Usage:-
+To add a new word trigger use the following command
+<br>
+- `?addreaction (word) (emoji)``
+<br/>
+<br>
+To remove a word trigger use the following command
+- `?removereaction (word)
+To list all word triggers use the following command
+- `?listreaction`
