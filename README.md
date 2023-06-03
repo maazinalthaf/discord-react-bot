@@ -10,15 +10,15 @@ This bot adds reactions to specific words in a message sent in a channel.
 `node index.js`
 
 ### Usage:-
-- To add a new word trigger use the following command
+To add a new word trigger use the following command
 `?addreaction (word) (emoji)`
 <br>
 Example: `?addreaction sad 😭`
 <br/>
-- To remove a word trigger use the following command
+To remove a word trigger use the following command
 `?removereaction (word)`
 <br>
 Example: `?removereaction sad`
 <br/>
-- To list all word triggers use the following command
+To list all word triggers use the following command
 `?listreaction`
