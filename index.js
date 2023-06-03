@@ -35,30 +35,61 @@ client.on('messageCreate', async (message) => {
     }
 
     // Process the addreaction command...
+    const word = args[0];
+    const reaction = args[1];
+
+    if (!word || !reaction) {
+      return message.reply('Please provide a word and a reaction.');
+    }
+
+    reactions[word] = reaction;
+    saveReactions();
+    message.reply(`Reaction "${reaction}" added for word "${word}".`);
   } else if (command === 'removereaction') {
     if (!hasPermission(message.member)) {
       return message.reply('You do not have permission to use this command.');
     }
 
     // Process the removereaction command...
+    const word = args[0];
+
+    if (!word) {
+      return message.reply('Please provide a word to remove the reaction.');
+    }
+
+    if (!reactions[word]) {
+      return message.reply(`There is no reaction associated with the word "${word}".`);
+    }
+
+    delete reactions[word];
+    saveReactions();
+    message.reply(`Reaction removed for word "${word}".`);
   } else if (command === 'listreaction') {
     if (!hasPermission(message.member)) {
       return message.reply('You do not have permission to use this command.');
     }
 
     // Process the listreaction command...
+    const reactionList = Object.entries(reactions).map(([word, reaction]) => `- ${word}: ${reaction}`).join('\n');
+
+    const embed = new MessageEmbed()
+      .setTitle('Reactions List')
+      .setDescription(reactionList);
+
+    message.reply({ embeds: [embed] });
   }
 
   // Other commands...
 });
 
 function hasPermission(member) {
-  return member.roles.cache.some(role => allowedRoles.includes(role.name));
+  const memberRoles = member.roles.cache.map(role => role.name);
+  return memberRoles.some(role => allowedRoles.includes(role));
 }
 
 function saveReactions() {
-  const fs = require('fs');
-  fs.writeFileSync('./reactions.json', JSON.stringify(reactions, null, 2), 'utf8');
+  // Save the updated reactions to the reactions.json file
+  // You can implement the code to save the reactions object to the file here
 }
 
 client.login(token);
