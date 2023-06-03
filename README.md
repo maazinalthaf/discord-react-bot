@@ -7,10 +7,10 @@ This bot adds reactions to specific words in a message sent in a channel.
 - prefix can be changed from **index.js** (default:"?")
 - open terminal and run the following commands
 <br>
-`npm install`
+```npm install```
 <br/>
 <br>
-`node index.js`
+```node index.js```
 <br/>
 
 ### Usage:-
