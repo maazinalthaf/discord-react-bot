@@ -31,7 +31,7 @@ client.on('messageCreate', async (message) => {
 
   if (command === 'addreaction') {
     // Role restriction code...
-    if (!message.member.roles.cache.some(role => role.name === 'Your Allowed Role')) {
+    if (!message.member.roles.cache.some(role => role.name === 'Your Allowed Role')) { // ADD ROLE NAME HERE
       return message.reply('You do not have permission to use this command.');
     }
 
