@@ -16,8 +16,8 @@ This bot adds reactions to specific words in a message sent in a channel.
 Example: `?addreaction sad 😭`
 <br/>
 - To remove a word trigger use the following command
-<br>
 `?removereaction (word)`
+<br>
 Example: `?removereaction sad`
 <br/>
 - To list all word triggers use the following command
