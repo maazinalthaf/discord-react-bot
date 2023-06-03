@@ -1,39 +1,18 @@
-const fs = require('fs').promises;
-const { Client, Intents } = require('discord.js');
+const { Client, Intents, MessageEmbed } = require('discord.js');
+const { token } = require('./config.json');
 
-const TOKEN = 'INSERT BOT TOKEN'; // Replace with your bot token
-const PREFIX = '?'; // Prefix for commands
-const REACTIONS_FILE = 'reactions.json'; // File to store reactions
+const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 
-const client = new Client({
-  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES],
-});
+const PREFIX = '?';
+const reactions = require('./reactions.json');
 
-let reactions = {};
-
-// Load reactions from the file on bot startup
-fs.readFile(REACTIONS_FILE, 'utf8')
-  .then((data) => {
-    reactions = JSON.parse(data);
-  })
-  .catch((err) => {
-    console.error('Error loading reactions:', err);
-  });
-
-// Function to save reactions to the file
-const saveReactions = () => {
-  fs.writeFile(REACTIONS_FILE, JSON.stringify(reactions))
-    .catch((err) => {
-      console.error('Error saving reactions:', err);
-    });
-};
-
-client.once('ready', () => {
+client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}`);
 });
 
 client.on('messageCreate', async (message) => {
-  const words = message.content.split(' ');
+  const content = message.content.toLowerCase(); // Convert message content to lowercase
+  const words = content.split(' ');
 
   for (const word of words) {
     if (reactions[word]) {
@@ -51,33 +30,47 @@ client.on('messageCreate', async (message) => {
   const command = args.shift().toLowerCase();
 
   if (command === 'addreaction') {
-    // Check if the user has the specified role(s)
-    const allowedRoles = ['Role1', 'Role2']; // Replace with your allowed role names or IDs
-    const memberRoles = message.member.roles.cache;
+    // Role restriction code...
 
-    const hasAllowedRole = allowedRoles.some((role) =>
-      memberRoles.some((memberRole) =>
-        memberRole.name === role || memberRole.id === role
-      )
-    );
+    // Process the addreaction command...
+  } else if (command === 'removereaction') {
+    // Role restriction code...
 
-    if (!hasAllowedRole) {
-      return message.reply('You do not have permission to use this command.');
+    const word = args[0];
+
+    if (!word) {
+      return message.reply('Please provide the word to remove the reaction.');
     }
 
-    // Process the addreaction command
-    const [word, reaction] = args;
-
-    if (!word || !reaction) {
-      return message.reply('Please provide both the word and the reaction.');
+    if (!reactions[word.toLowerCase()]) {
+      return message.reply('No reaction found for the specified word.');
     }
 
-    reactions[word.toLowerCase()] = reaction;
+    delete reactions[word.toLowerCase()];
     saveReactions();
 
-    return message.reply(`Reaction "${reaction}" added for the word "${word}".`);
+    return message.reply(`Reaction removed for the word "${word}".`);
+  } else if (command === 'listreaction') {
+    // Role restriction code...
+
+    const reactionEmbed = new MessageEmbed()
+      .setTitle('Current Word-Reaction Mappings')
+      .setColor('#0099ff');
+
+    for (const word in reactions) {
+      reactionEmbed.addField(word, reactions[word]);
+    }
+
+    return message.channel.send({ embeds: [reactionEmbed] });
   }
+
+  // Other commands...
+
 });
 
-client.login(TOKEN);
+function saveReactions() {
+  const fs = require('fs');
+  fs.writeFileSync('./reactions.json', JSON.stringify(reactions, null, 2), 'utf8');
+}
 
+client.login(token);
