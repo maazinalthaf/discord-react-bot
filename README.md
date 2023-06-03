@@ -5,7 +5,7 @@ This bot adds reactions to specific words in a message sent in a channel.
 - clone the repository
 - insert the token and names of the allowed roles (role ids will not work) in **config.json**
 - prefix can be changed from **index.js** (default:"?")
-- open terminal and run the following commands
+- open terminal and run the following commands <br>
 ```npm install```
 
 ```node index.js```
