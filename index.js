@@ -1,5 +1,5 @@
 const { Client, Intents, MessageEmbed } = require('discord.js');
-const { token } = require('./config.json');
+const { token, allowedRole } = require('./config.json');
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 
@@ -31,37 +31,25 @@ client.on('messageCreate', async (message) => {
 
   if (command === 'addreaction') {
     // Role restriction code...
+    if (!message.member.roles.cache.some(role => role.name === allowedRole)) {
+      return message.reply('You do not have permission to use this command.');
+    }
 
     // Process the addreaction command...
   } else if (command === 'removereaction') {
     // Role restriction code...
-
-    const word = args[0];
-
-    if (!word) {
-      return message.reply('Please provide the word to remove the reaction.');
+    if (!message.member.roles.cache.some(role => role.name === allowedRole)) {
+      return message.reply('You do not have permission to use this command.');
     }
 
-    if (!reactions[word.toLowerCase()]) {
-      return message.reply('No reaction found for the specified word.');
-    }
-
-    delete reactions[word.toLowerCase()];
-    saveReactions();
-
-    return message.reply(`Reaction removed for the word "${word}".`);
+    // Process the removereaction command...
   } else if (command === 'listreaction') {
     // Role restriction code...
-
-    const reactionEmbed = new MessageEmbed()
-      .setTitle('Current Word-Reaction Mappings')
-      .setColor('#0099ff');
-
-    for (const word in reactions) {
-      reactionEmbed.addField(word, reactions[word]);
+    if (!message.member.roles.cache.some(role => role.name === allowedRole)) {
+      return message.reply('You do not have permission to use this command.');
     }
 
-    return message.channel.send({ embeds: [reactionEmbed] });
+    // Process the listreaction command...
   }
 
   // Other commands...
