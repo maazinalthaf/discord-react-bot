@@ -1,5 +1,5 @@
 const { Client, Intents, MessageEmbed } = require('discord.js');
-const { token } = require('./config.json');
+const { token, allowedRoles } = require('./config.json');
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 
@@ -11,7 +11,7 @@ client.on('ready', () => {
 });
 
 client.on('messageCreate', async (message) => {
-  const content = message.content.toLowerCase(); // Convert message content to lowercase
+  const content = message.content.toLowerCase();
   const words = content.split(' ');
 
   for (const word of words) {
@@ -30,47 +30,66 @@ client.on('messageCreate', async (message) => {
   const command = args.shift().toLowerCase();
 
   if (command === 'addreaction') {
-    // Role restriction code...
+    if (!hasPermission(message.member)) {
+      return message.reply('You do not have permission to use this command.');
+    }
 
     // Process the addreaction command...
-  } else if (command === 'removereaction') {
-    // Role restriction code...
+    const word = args[0];
+    const reaction = args[1];
 
+    if (!word || !reaction) {
+      return message.reply('Please provide a word and a reaction.');
+    }
+
+    reactions[word] = reaction;
+    saveReactions();
+    message.reply(`Reaction "${reaction}" added for word "${word}".`);
+  } else if (command === 'removereaction') {
+    if (!hasPermission(message.member)) {
+      return message.reply('You do not have permission to use this command.');
+    }
+
+    // Process the removereaction command...
     const word = args[0];
 
     if (!word) {
-      return message.reply('Please provide the word to remove the reaction.');
+      return message.reply('Please provide a word to remove the reaction.');
     }
 
-    if (!reactions[word.toLowerCase()]) {
-      return message.reply('No reaction found for the specified word.');
+    if (!reactions[word]) {
+      return message.reply(`There is no reaction associated with the word "${word}".`);
     }
 
-    delete reactions[word.toLowerCase()];
+    delete reactions[word];
     saveReactions();
-
-    return message.reply(`Reaction removed for the word "${word}".`);
+    message.reply(`Reaction removed for word "${word}".`);
   } else if (command === 'listreaction') {
-    // Role restriction code...
-
-    const reactionEmbed = new MessageEmbed()
-      .setTitle('Current Word-Reaction Mappings')
-      .setColor('#0099ff');
-
-    for (const word in reactions) {
-      reactionEmbed.addField(word, reactions[word]);
+    if (!hasPermission(message.member)) {
+      return message.reply('You do not have permission to use this command.');
     }
 
-    return message.channel.send({ embeds: [reactionEmbed] });
+    // Process the listreaction command...
+    const reactionList = Object.entries(reactions).map(([word, reaction]) => `- ${word}: ${reaction}`).join('\n');
+
+    const embed = new MessageEmbed()
+      .setTitle('Reactions List')
+      .setDescription(reactionList);
+
+    message.reply({ embeds: [embed] });
   }
 
   // Other commands...
-
 });
 
+function hasPermission(member) {
+  const memberRoles = member.roles.cache.map(role => role.name);
+  return memberRoles.some(role => allowedRoles.includes(role));
+}
+
 function saveReactions() {
-  const fs = require('fs');
-  fs.writeFileSync('./reactions.json', JSON.stringify(reactions, null, 2), 'utf8');
+  // Save the updated reactions to the reactions.json file
+  // You can implement the code to save the reactions object to the file here
 }
 
 client.login(token);
