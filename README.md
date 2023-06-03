@@ -22,3 +22,7 @@ Example: `?removereaction sad`
 <br/>
 To list all word triggers use the following command
 `?listreaction`
+
+### Note:-
+- The words added are not CASE-SENSITIVE i.e uppercase and lowercase letters are treated as equivalent.
+- This bot relys on a json database i.e **reactions.json** and all the words added will be stored in the json file so that the bot remembers all the set word triggers whenever it restarts but keep in mind that the words set are not server exclusive and the bot will react to the words present in **reactions.json** in whichever server the bot is present in.
