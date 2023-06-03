@@ -12,9 +12,13 @@ This bot adds reactions to specific words in a message sent in a channel.
 ### Usage:-
 - To add a new word trigger use the following command
 `?addreaction (word) (emoji)`
-**Example: ?addreaction sad 😭**
+<br>
+Example: `?addreaction sad 😭`
+<br/>
 - To remove a word trigger use the following command
+<br>
 `?removereaction (word)`
-**Example: ?removereaction sad**
+Example: `?removereaction sad`
+<br/>
 - To list all word triggers use the following command
 `?listreaction`
