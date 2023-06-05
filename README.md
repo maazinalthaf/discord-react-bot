@@ -1,5 +1,5 @@
 # discord-react-bot
-This is a discord bot that can autoreact when someone says a certain word in message 
+This is a discord bot that can autoreact to a message when someone says a certain word 
 
 ### Installation:-
 - clone the repository
