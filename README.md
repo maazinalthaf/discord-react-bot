@@ -3,14 +3,15 @@ This is a discord bot that can autoreact to a message when someone says a certai
 
 ### Installation:-
 - clone the repository
-- insert the token and names of the allowed roles (role ids will not work) in **config.json**
+- insert the token and names of the allowed role(s) (role ids will not work) in **config.json**
+- only the allowed role(s) set in **config.json** will be allowed to use the commands of this bot
 - prefix can be changed from **index.js** (default:"?")
 - open terminal and run the following commands 
 `npm install`
 `node index.js`
 ### Usage:-
 To add a new word trigger use the following command
-`?addreaction (word) (emoji)`
+`?addreaction <word> <emoji>`
 <br>
 Example: `?addreaction sad 😭`
 <br/>
