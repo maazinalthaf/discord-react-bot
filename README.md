@@ -16,7 +16,7 @@ To add a new word trigger use the following command
 Example: `?addreaction sad 😭`
 <br/>
 To remove a word trigger use the following command
-`?removereaction (word)`
+`?removereaction <word>`
 <br>
 Example: `?removereaction sad`
 <br/>
