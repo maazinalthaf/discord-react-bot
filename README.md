@@ -1,4 +1,4 @@
-# discord-react-bot
+# discord-react-bot (deprecated)
 This is a discord bot that can autoreact to a message when someone says a certain word 
 
 ### Installation:-
